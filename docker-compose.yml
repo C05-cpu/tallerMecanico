@@ -1,0 +1,44 @@
+services:
+  czcdb:
+    image: mysql:9.7
+    container_name: czc_base_datos
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_DATABASE: db_taller
+    ports:
+      - 3308:3306
+    volumes:
+      - ./db_dump:/docker-entrypoint-initdb.d
+      - ./mysql_data:/var/lib/mysql
+    secrets:
+      - db_password
+
+  czcdatos:
+    container_name: czc_web_datos
+    volumes:
+      - ./Data/public:/var/www/html/public
+      - ./Data/src:/var/www/html/src
+    build:
+      context: .
+      dockerfile: ./Data/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - czcdb
+
+  czcnegocio:
+    container_name: czc_web_negocio
+    volumes:
+      - ./Business/public:/var/www/html/public
+      - ./Business/src:/var/www/html/src
+    build:
+      context: .
+      dockerfile: ./Business/Dockerfile
+    ports:
+      - 9090:80
+    depends_on:
+      - czcdatos
+
+secrets:
+  db_password:
+    file: ./db_password.txt

@@ -1,0 +1,87 @@
+@host = http://localhost:9090/api
+@uri = {{host}}/ordenes_trabajo
+
+
+###
+GET {{uri}}
+
+
+###
+GET {{uri}}/1
+
+
+###
+GET {{uri}}/999
+
+
+###
+POST {{uri}}
+Content-Type: application/json
+
+{
+  "placa_vehiculo": "HJK456",
+  "propietario": "Caleb Zambrano Campos",
+  "descripcion_falla": "La batería no carga y el motor no arranca",
+  "costo_estimado": 65000.50
+}
+
+
+###
+POST {{uri}}
+Content-Type: application/json
+
+{
+  "placa_vehiculo": "BCD123",
+  "propietario": "Carlos Mora Rojas",
+  "descripcion_falla": "Revision de suspension trasera",
+  "costo_estimado": 40000
+}
+
+
+###
+POST {{uri}}
+Content-Type: application/json
+
+{
+  "placa_vehiculo": "A",
+  "propietario": "J4 as vf",
+  "descripcion_falla": "algo",
+  "costo_estimado": -1,
+  "estado": "Perdido"
+}
+
+
+###
+PUT {{uri}}/1
+Content-Type: application/json
+
+{
+  "estado": "En Proceso",
+  "costo_estimado": 92000
+}
+
+
+###
+PUT {{uri}}/999
+Content-Type: application/json
+
+{
+  "estado": "Finalizado"
+}
+
+
+###
+PUT {{uri}}/1
+Content-Type: application/json
+
+{
+  "estado": "Reparado"
+}
+
+
+###
+DELETE {{uri}}/3
+
+
+###
+DELETE {{uri}}/999
